@@ -11,9 +11,12 @@ class Gift
 {
 public:
     Gift();
+    // Getters
+    int GetId() {return Id;}
     QString GetGiftName() {return GiftName;}
     QString GetNote() {return Note;}
 private:
+    int Id;
     QString GiftName;
     QString Note;
     User *Reciver;

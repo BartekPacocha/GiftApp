@@ -2,12 +2,30 @@
 
 #include <QApplication>
 #include <QtDebug>
+#include <QtSql/QSqlDatabase>
+#include <QMessageBox>
 #include <memory>
 #include <vector>
 
-#include "user.h"
-#include "gift.h"
+#include "giftlist.h"
 #include "userlist.h"
+
+void ConnectToDb()
+{
+    QSqlDatabase db = QSqlDatabase::addDatabase("QMYSQL");
+    db.setHostName("localhost");
+    db.setDatabaseName("Users");
+    db.setUserName("root");
+    db.setPassword("");
+    if(db.open())
+    {
+        qDebug() << "connected " << db.hostName();
+    }else{
+        qDebug() << "Connection FAILED.";
+
+    }
+
+};
 
 int main(int argc, char *argv[])
 {
@@ -37,11 +55,9 @@ int main(int argc, char *argv[])
         qDebug() << u->GetUserName();
 
     std::unique_ptr<Gift> gift(new Gift());
-#if 0
-    qDebug() << user->GetUserName();
-    qDebug() << gift->GetNote();
-    qDebug() << gift->GetGiftName();
-#endif
+
+    ConnectToDb();
+
 
     return a.exec();
 }
